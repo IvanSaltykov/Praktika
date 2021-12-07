@@ -17,14 +17,31 @@ namespace WinDB_3_
             InitializeComponent();
         }
 
+        DataView ЗаказчикиDataView;
         private void button1_Click(object sender, EventArgs e)
         {
-            oleDbDataAdapter1.Fill(dataSet111.Заказчики);
+
+            oleDbDataAdapter1.Fill(productDataSet1.Заказчики);
+            // Загрузка таблицы данными:
+            заказчикиTableAdapter1.Fill(productDataSet1.Заказчики);
+            // Настройка объекта DataView
+            ЗаказчикиDataView = new
+            DataView(productDataSet1.Заказчики);
+            // Настройка dataGridView для отображения данных
+            dataGridView1.DataSource = ЗаказчикиDataView;
+            // Присвоения исходного порядка сортировки
+            ЗаказчикиDataView.Sort = "Фамилия";
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            oleDbDataAdapter1.Update(dataSet111);
+            oleDbDataAdapter1.Update(productDataSet1);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ЗаказчикиDataView.Sort = SortTextBox.Text;
+            ЗаказчикиDataView.RowFilter = FilterTextBox.Text;
         }
     }
 }
